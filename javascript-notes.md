@@ -74,6 +74,64 @@ We can use these functions to get the numeric value of given strings. `parseInt`
 
 These functions can be useful when working with data input from forms as user supplied data such as this is a *string* by default.
 
+## Arrow Functions
+
+We can use *arrow functions* when we use *anonymous functions* aka *function expressions*.
+
+We do not need to use the keyword `function` but we do need to use `=>` which looks like an arrow.
+
+```javascript=
+const squaredNum = (n) => {
+    return n*n;
+}
+```
+
+If we have only one parameter (as in the example above) we can omit the `()` but it depends on how we like to code.
+
+```javascript=
+const squaredNum = n => {
+    return n*n;
+}
+```
+
+We *must* include the `()` if we have more than one parameter.
+
+```javascript=
+const multiply = (x, y) => {
+    return x*y;
+}
+```
+
+If the function does not take any arguments, we can just use `()` as shown below.
+
+```javascript=
+const greeting = () => {
+    return 'hello world!';
+}
+```
+
+If we only have one expression which is returned without any other logic involved in the function, we can use *implicit return* which means we can omit the keyword `return` - in order to use this we will need to use `()` instead of `{}` for the function block.
+
+```javascript=
+const nums = [1, 2, 3, 4, 5];
+const oddEven = nums.map(n => (
+    n % 2 === 0 ? 'even' : 'odd'
+));
+```
+
+It is possible to put arrow functions onto one line if it makes sense to do so - i.e. the logic in the function is not too long. In this case, we do not need to wrap the function in `()` or `{}`
+
+```javascript=
+const squaredNum = (n) => n*n;
+```
+
+An example using `.map()`
+
+```javascript=
+const nums = [1, 2, 3, 4, 5];
+const squaredNums = nums.map( (n) => n*n );
+```
+
 ## Applying Functions to Data Collections
 
 ### Array Callback Methods
