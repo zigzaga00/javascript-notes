@@ -74,3 +74,118 @@ We can use these functions to get the numeric value of given strings. `parseInt`
 
 These functions can be useful when working with data input from forms as user supplied data such as this is a *string* by default.
 
+## Applying Functions to Data Collections
+
+### Array Callback Methods
+
+Some array methods accept *callback* functions as arguments.
+
+>[!NOTE]
+>A *callback* is just a *function* which is passed to another *function* or a *method* as an *argument*
+
+This is common in js and is possible because in js everything is an *object*.
+
+We find this pattern in python, too - we are looking at situations such as we find in the *functional programing* paradigm in which we use *map*, *filter* and (not often) *reduce* to create new collections of data from existing *data collections*.
+
+The general idea is that we want the *callback function* to be run on every object in the data collection - in this case *array*.
+
+### forEach()
+
+The `.forEach()` array method executes a *callback function* for each object in the array it is called on.
+
+The callback can be a regular function or a *function expression* aka an *anonymous function*.
+
+With a regular function:
+
+```javascript=
+function doubleNum(n) {
+    return n * 2;
+}
+
+const numbers = [1, 2, 3, 4, 5];
+
+numbers.forEach(doubleNum);
+```
+
+With an anonymous function:
+
+```javascript=
+const numbers = [1, 2, 3, 4, 5];
+
+numbers.forEach(function(n) {
+    console.log(n * 2);
+})
+```
+
+We could achieve the same results using a *for of* loop but when we use `.forEach()` we can capture the index more easily. The `.forEach()` array method also introduces us to the idea of using callback functions on data collections.
+
+>[!NOTE]
+>We did not used to have *for of* loops in js so from a point of history `.forEach()` was used
+
+Here is how we can capture the index:
+
+```javascript=
+const numbers = [1, 2, 3, 4, 5];
+
+numbers.forEach(function(n, i) {
+    console.log(`${i} : ${n*2}`);
+})
+```
+
+### map()
+
+A very useful array method which uses a callback function as an argument is `.map()`
+
+This method is similar to `.forEach()` but it creates a new array based on the transformed objects from the original array. We could, for example, make a new array from an array of numbers but in the new array the numbers have been doubled.
+
+```javascript=
+const nums = [1, 2, 3, 4, 5];
+
+const doubledNums = nums.map(function(n) {
+    return n*2;
+})
+```
+
+We can use regular functions as the callback but typically anonymous functions are used.
+
+Here is another example of using `.map()` - in this one the new array will be filled with objects created from the original array.
+
+```javascript=
+const nums = [1, 2, 3, 4, 5];
+
+const numsData = nums.map(function(n) {
+    return {
+        value: n,
+        isEven: n % 2 === 0
+    }
+})
+```
+
+Here is one more example in which we create a new array which is comprised of just the *title* value of book objects in an original array:
+
+```javascript=
+const books = [
+    {
+        title: 'Wutherning Heights',
+        author: 'Emily Bronte',
+        rating: 5
+    },
+    {
+        title: 'Jayne Ayre',
+        author: 'Charlotte Bronte',
+        rating: 4
+    },
+    {
+        title: 'Metamorphosis',
+        author: 'Franz Kafka',
+        rating: 5
+    }
+]
+
+const titles = books.map(function(book) {
+    return book.title;
+})
+```
+
+Since `.map()` creates a new array we need to make sure that the callback function passed to it returns values.
+
