@@ -487,3 +487,88 @@ const filmRatings = films.reduce( (ratedFilms, film) => {
 }, {})
 ```
 
+## New JS Features
+
+Some features which have been already mentioned are new to js, but there are more.
+
+### Default Parameters
+
+It used to be that developers using js had to manually check if a parameter had been passed a value when a function was called. An example of this would be:
+
+```javascript=
+function multiply(x, y) {
+    y = typeof y === 'undefined' ? 1 : y;
+    return x * y;
+}
+```
+
+This is no longer necessary as js now supports a more pythonesque way of setting default parameres for functions which is simply to use `y=1`
+
+```javascript=
+function multiply(x=1, y=1) {
+    return x * y;
+}
+```
+
+### Spread for Function Calls
+
+We can *spread* iterables using `...` - this will essentialy *unpack* the iterable.
+
+We can use *spread* when passing an iterable to a function - an example is when we want to pass each individual element in an array as individual arguments.
+
+```javascript=
+const nums = [34, 22, 83, 33, 5];
+let maxNum = Math.max(...nums);
+```
+
+```javascript=
+function addNums(a, b, c) {
+    return a + b + c;
+}
+
+const nums = [338, 232, 88];
+let summedNums = addNums(...nums);
+```
+
+## Spread in Array Literals
+
+We can use *spread* to expand (unpack) elements in arrays. This can be used to create new arrays from the elements in other arrays.
+
+```javascript=
+const primaryColors = ['red', 'yellow', 'blue'];
+const secondaryColors = ['orange', 'green', 'purple'];
+const colors = [...primaryColors, ...secondaryColors];
+```
+
+## Spread in Object Literals
+
+When we use *spread* in an *object* we find it copies the properties of the spread object into the new object.
+
+```javascript=
+const fish = {
+    swims: true,
+    breathes: 'under water',
+    habitat: 'water'
+}
+
+const clownFish = {
+    ...fish,
+    color: 'stripy'
+}
+```
+
+We can overwrite property values by using the same key name but with a different value after the original key:value pair.
+
+```javascript=
+const fish = {
+    swims: true,
+    breathes: 'under water',
+    habitat: 'water'
+}
+
+const clownFish = {
+    ...fish,
+    habitat: 'coral reef'
+}
+```
+
