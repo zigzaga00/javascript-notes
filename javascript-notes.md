@@ -247,3 +247,243 @@ const titles = books.map(function(book) {
 
 Since `.map()` creates a new array we need to make sure that the callback function passed to it returns values.
 
+### find()
+
+The array method `.find()` will return the first object which matches a given condition as `true`.
+
+This method is useful for finding data such as posts with unique id attributes or posted by specific users.
+
+```javascript=
+const comments = [
+    {
+        userName: 'dduck',
+        comment: 'I love puddles!',
+        likes: 3
+    },
+    {
+        userName: 'mmouse',
+        comment: 'Where is the cheese?',
+        likes: 2
+    },
+    {
+        userName: 'dduck',
+        comment: 'Quack!',
+        likes: 8
+    }
+]
+
+const dduck1 = comments.find( (comment) => comment.userName.includes('dduck') )
+const bestComment = comments.find( (comment) => comment.likes > 5 )
+```
+
+Another example is if a post needs to be updated - a request to do so could be sent which includes the post id - this would then need to be found before it could be updated.
+
+### filter()
+
+This array method creates a new array based on a *subset* of the original array. This is another key method from the *functional programing* paradigm.
+
+```javascript=
+const comments = [
+    {
+        userName: 'dduck',
+        comment: 'I love puddles!',
+        likes: 3
+    },
+    {
+        userName: 'mmouse',
+        comment: 'Where is the cheese?',
+        likes: 2
+    },
+    {
+        userName: 'dduck',
+        comment: 'Quack!',
+        likes: 8
+    },
+    {
+        userName: 'mmouse',
+        comment: 'I love Minnie!',
+        likes: 3
+    }
+]
+
+const mmouseComments = comments.filter( (comment) => comment.userName === 'mmouse' )
+```
+
+This is a very useful method and is used in many different contexts. One example is finding results from a user generated search.
+
+```javascript=
+const films = [
+    {
+        title: 'Rear Window',
+        genre: 'thriller'
+    },
+    {
+        title: 'The Shining',
+        genre: 'horror'
+    },
+    {
+        title: 'Die Hard',
+        genre: 'action'
+    },
+    {
+        title: 'Manhunter',
+        genre: 'thriller'
+    },
+    {
+        title: 'Rambo',
+        genre: 'action'
+    },
+    {
+        title: 'Fracture',
+        genre: 'thriller'
+    }
+]
+
+const query = 'thriller';
+const results = films.filter( (film) => {
+    const genre = film.genre.toLowerCase();
+    return genre.includes( query.toLowerCase() )
+})
+```
+
+### every() and some()
+
+The `.every()` method checks if *all* the objects in an array satisfy a given *boolean* expression. The callback function used has to itself be a boolean.
+
+```javascript=
+const nums = [2, 38, 17, 56, 98, 32];
+
+const small = nums.every( (num) => num <= 100 );
+const even = nums.every( (num) => num %2 === 0 );
+```
+
+The `.some()` method is the same as `.every()` except it will return `true` if any object in the array returns as `true`.
+
+```javascript=
+const nums = [2, 38, 17, 56, 98, 32];
+
+const large = nums.some( (num) => num > 100 );
+const odd = nums.some( (num) => num %2 === 1 );
+```
+
+### reduce()
+
+The `.reduce()` array method takes objects in an array and reduces them to a single value. This might be, for example, summing the numbers in an array or finding the total product of them.
+
+The `.reduce()` method takes two arguments - the *accumulator* and the *current value*.
+
+```javascript=
+const nums = [1, 2, 3, 4, 5];
+
+const numsSum = nums.reduce( (accumulator, current) => (
+    accumulator + current
+))
+
+const numsProd = nums.reduce( (accumulator, current) => (
+    accumulator * current
+))
+```
+
+We can pass an initial value to `.reduce()` as the second argument we pass to it.
+
+```javascript=
+const nums = [1, 2, 3, 4, 5];
+
+const newSum = nums.reduce( (accum, current) => (
+    accum + current
+), 100 )
+```
+
+We can also use `.reduce()` to find the minimum or maximum value in an array. In this case, we can rename *accumulator* as *min* or *max* and alter the logic inside the callback function.
+
+```javascript=
+const nums2 = [11, 2, 23, 84, 15];
+
+const nums2Min = nums2.reduce( (min, current) => {
+    if(current < min) { return current };
+    return min;
+})
+
+const nums2Max = nums2.reduce( (max, current) => {
+    if(current > max) { return current };
+    return max;
+})
+```
+
+We can also use `.reduce()` to tally objects in an array and store the results in an object by passing an empty object as the initial value and altering the logic in the callback function.
+
+```javascript=
+const gender = ['b', 'g', 'g', 'b', 'b', 'g', 'g', 'g', 'g'];
+
+const classGender = gender.reduce( (tally, gen) => {
+    if(tally[gen]) {
+        tally[gen]++;
+    } else {
+        tally[gen] = 1;
+    }
+    return tally;
+}, {})
+```
+
+Another way to achieve the above tally is:
+
+```javascript=
+const gender = ['b', 'g', 'g', 'b', 'b', 'g', 'g', 'g', 'g'];
+
+const classGender = gender.reduce( (tally, gen) => {
+    tally[gen] = (tally[gen] || 0) + 1;
+    return tally;
+}, {})
+```
+
+A more complex example of using `.reduce()` to tally objects is found in the following code which groups films by their star ratings.
+
+```javascript=
+const films = [
+    {
+        title: 'Rear Window',
+        genre: 'thriller',
+        stars: 5
+    },
+    {
+        title: 'The Shining',
+        genre: 'horror',
+        stars: 4
+    },
+    {
+        title: 'Die Hard',
+        genre: 'action',
+        stars: 4
+    },
+    {
+        title: 'Manhunter',
+        genre: 'thriller',
+        stars: 5
+    },
+    {
+        title: 'Rambo',
+        genre: 'action',
+        stars: 5
+    },
+    {
+        title: 'Fracture',
+        genre: 'thriller',
+        stars: 4
+    },
+    {
+        title: 'Snakes on a Plane',
+        genre: 'action',
+        stars: 1
+    }
+]
+
+const filmRatings = films.reduce( (ratedFilms, film) => {
+    const rating = film.stars;
+    if(!ratedFilms[rating]) {
+        ratedFilms[rating] = [];
+    }
+    ratedFilms[rating].push(film);
+    return ratedFilms;
+}, {})
+```
+
